@@ -1,0 +1,3 @@
+#!/bin/bash
+# This script generates a ascii art heading
+figlet -f big "Title"

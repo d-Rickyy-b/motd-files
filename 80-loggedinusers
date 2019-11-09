@@ -1,0 +1,8 @@
+#!/bin/bash
+# This scripts prints out all logged in users
+
+echo ""
+echo "logged in users:"
+echo "  $(who|sed -e ':a;N;$!ba;s/\n/\n  /g')"
+echo ""
+

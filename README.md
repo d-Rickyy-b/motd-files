@@ -36,6 +36,6 @@ session    optional     pam_motd.so noupdate
 ## Demo of the motd files
 Here is a screenshot of the motd one of my servers
 
-[!Screenshot](https://raw.githubusercontent.com/d-Rickyy-b/motd-files/master/demo.png)
+![Screenshot](https://raw.githubusercontent.com/d-Rickyy-b/motd-files/master/demo.png)
 
 If you have any questions, don't hesitate to contact me.

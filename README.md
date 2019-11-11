@@ -38,4 +38,7 @@ Here is a screenshot of the motd one of my servers
 
 ![Screenshot](https://raw.githubusercontent.com/d-Rickyy-b/motd-files/master/demo.png)
 
+## Troubleshooting
+Most of these scripts parse some information from certain commands to display them. If your os is not set to english, the scripts might fail to parse the correct data.
+
 If you have any questions, don't hesitate to contact me.

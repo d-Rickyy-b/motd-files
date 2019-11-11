@@ -40,5 +40,7 @@ Here is a screenshot of the motd one of my servers
 
 ## Troubleshooting
 Most of these scripts parse some information from certain commands to display them. If your os is not set to english, the scripts might fail to parse the correct data.
+Also remember that all those scripts will be executed before your server starts your session & shell. That means the more work you do there, the longer it takes for your shell to appear.
+You can always use `time /path/to/script` to check the execution time of your script. Make sure all scripts together don't take longer than a second or you will have to wait for quite a long time.
 
 If you have any questions, don't hesitate to contact me.

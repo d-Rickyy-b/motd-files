@@ -9,7 +9,7 @@ When you login to a system (e.g. via ssh), your system will prompt you with the 
 Setting up a dynamic motd is quite easy on a modern debian or ubuntu os. My reference is [this great article](https://ownyourbits.com/2017/04/05/customize-your-motd-login-message-in-debian-and-ubuntu/) written by @nachoparker.
 
 If you have an up to date debian or ubuntu you can start right away.
-```cd /etc/uptade-motd.d/```
+```cd /etc/update-motd.d/```
 After opening that directory you can download/create your own motd script files there. One important thing: the scripts inside that folder will be executed in the order of their names (alphabetically) ascending. That means a script called "bar" will be executed before a script called "foo". That's why most of the scripts in that folder will have special names beginning with a double digit number such as "10-foo" and "20-bar" (that way you can have foo before bar).
 
 Make sure you are root when you want to store files into that directory! Downloading the files is easy. Just open a GitHub repo, choose a script you want to download, click on "Raw" on the upper right side of the file and copy its link.

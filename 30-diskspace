@@ -41,7 +41,7 @@ for point in ${mountpoints}; do
 
     # Rest of the unused space in white
     barContent="${barContent}${clear}${dim}"
-    for sep in $(seq 1 $(($barWidth-$usedBarWidth))); do
+    for sep in $(seq 1 $((barWidth-usedBarWidth))); do
         barContent="${barContent}="
     done
     bar="[${barContent}${clear}]"

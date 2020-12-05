@@ -38,10 +38,10 @@ unix_date () {
 # Generate a string based on the expiry date
 expires_in () {
     diff=$(( $1 - $2 ))
-    expiresInHours=$(( $diff / 3600 ))
+    expiresInHours=$(( diff / 3600 ))
 
     if [ $expiresInHours -gt 48 ]; then
-        echo "$(( $expiresInHours / 24 )) days"
+        echo "$(( expiresInHours / 24 )) days"
     else
         echo "$expiresInHours hours"
     fi
@@ -54,23 +54,23 @@ output=""
 output+="  Domain | Status\n"
 for i in "${!certificates[@]}"; do
     cert="${certificates[$i]}"
-    certname="$(openssl x509 -subject -noout -in $cert | cut -d " " -f3)"
+    certname=$(openssl x509 -subject -noout -in "$cert" | cut -d " " -f3)
 
-    exp_date=$(expiry_date $cert)
+    exp_date=$(expiry_date "$cert")
     expires=$(unix_date "$exp_date")
     now=$(unix_date "now")
     inAWeek=$(unix_date "1 week")
 
-    expiresIn=$(expires_in $expires $now)
+    expiresIn=$(expires_in "$expires" "$now")
     expiryDate=$(date -d "$exp_date" +"%d.%m.%Y")
 
     # We can also get the name of the certificate automatically with:
     # openssl x509 -subject -noout -in $cert | cut -d " " -f3
     # But that takes a lot of time. We don't want to wait during login
 
-    if [ $expires -le $now ]; then
+    if [ "$expires" -le "$now" ]; then
         output+=" $red▲$undim ${certificateNames[$i]} | ${red}expired ($expiryDate)$undim\n"
-    elif [ $expires -le $inAWeek ]; then
+    elif [ "$expires" -le "$inAWeek" ]; then
         output+="  $orange●$undim ${certificateNames[$i]} | ${orange}expiring soon ($expiresIn left)$undim\n"
     else
         output+="  $green●$undim ${certificateNames[$i]} | ${green}expires in $expiresIn ($expiryDate)$undim\n"

@@ -4,9 +4,9 @@ jails=($(fail2ban-client status | grep "Jail list:" | sed "s/ //g" | awk '{split
 
 out="jail,failed,total,banned,total\n"
 
-for jail in ${jails[@]}; do
+for jail in "${jails[@]}"; do
     # slow because fail2ban-client has to be called for every jail (~70ms per jail)
-    status=$(fail2ban-client status ${jail})
+    status=$(fail2ban-client status "${jail}")
     failed=$(echo "$status" | grep -ioP '(?<=Currently failed:\t)[[:digit:]]+')
     totalfailed=$(echo "$status" | grep -ioP '(?<=Total failed:\t)[[:digit:]]+')
     banned=$(echo "$status" | grep -ioP '(?<=Currently banned:\t)[[:digit:]]+')

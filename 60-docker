@@ -13,7 +13,7 @@ mapfile -t containers < <(docker ps -a --format '{{.Names}}\t{{.Status}}' | awk 
 
 out=""
 for i in "${!containers[@]}"; do
-    IFS=" " read name status <<< ${containers[i]}
+    IFS=" " read -r name status <<< "${containers[i]}"
     # color green if service is active, else red
     if [[ "${status}" == "Up" ]]; then
         out+="${name}:,${green}${status,,}${undim},"
@@ -21,7 +21,7 @@ for i in "${!containers[@]}"; do
         out+="${name}:,${red}${status,,}${undim},"
     fi
     # insert \n every $COLUMNS column
-    if [ $((($i+1) % $COLUMNS)) -eq 0 ]; then
+    if [ $(((i+1) % COLUMNS)) -eq 0 ]; then
         out+="\n"
     fi
 done

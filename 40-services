@@ -22,7 +22,7 @@ for service in "${services[@]}"; do
 done
 
 out=""
-for i in ${!services[@]}; do
+for i in "${!services[@]}"; do
     # color green if service is active, else red
     if [[ "${service_status[$i]}" == "active" ]]; then
         out+="${services[$i]}:,${green}${service_status[$i]}${undim},"
@@ -30,7 +30,7 @@ for i in ${!services[@]}; do
         out+="${services[$i]}:,${red}${service_status[$i]}${undim},"
     fi
     # insert \n every $COLUMNS column
-    if [ $((($i+1) % $COLUMNS)) -eq 0 ]; then
+    if [ $(((i+1) % COLUMNS)) -eq 0 ]; then
         out+="\n"
     fi
 done

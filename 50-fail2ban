@@ -4,17 +4,17 @@
 # Taken from: https://github.com/yboetz/motd/blob/master/50-fail2ban
 
 logfile='/var/log/fail2ban.log*'
-mapfile -t lines < <(grep -hioP '(\[[a-z-]+\]) (ban|unban)' $logfile | sort | uniq -c)
+mapfile -t lines < <(grep -hioP '(\[[a-z-]+\]) (ban|unban)' "$logfile" | sort | uniq -c)
 jails=($(printf -- '%s\n' "${lines[@]}" | grep -oP '\[\K[^\]]+' | sort | uniq))
 
 out=""
-for jail in ${jails[@]}; do
+for jail in "${jails[@]}"; do
     bans=$(printf -- '%s\n' "${lines[@]}" | grep -iP "[[:digit:]]+ \[$jail\] ban" | awk '{print $1}')
     unbans=$(printf -- '%s\n' "${lines[@]}" | grep -iP "[[:digit:]]+ \[$jail\] unban" | awk '{print $1}')
     bans=${bans:-0} # default value
     unbans=${unbans:-0} # default value
-    diff=$(($bans-$unbans))
-    out+=$(printf "$jail, %+3s bans, %+3s unbans, %+3s active" $bans $unbans $diff)"\n"
+    diff=$((bans-unbans))
+    out+=$(printf "$jail, %+3s bans, %+3s unbans, %+3s active" "$bans" "$unbans" "$diff")"\n"
 done
 
 printf "\nfail2ban status (monthly):\n"

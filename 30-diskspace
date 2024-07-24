@@ -22,7 +22,8 @@ echo "disk usage:"
 
 for point in ${mountpoints}; do
     # Get the output of df and add spaces after the newlines
-    line=$(df -hl "${point}"|sed -e ':a;N;$!ba;s/\n/\n  /g')
+    # If you only want local partitions, you can add the -l flag to the df command
+    line=$(df -h "${point}" | sed -e ':a;N;$!ba;s/\n/\n  /g')
     usagePercent=$(echo "$line" | tail -n1 | awk '{print $5;}' | sed 's/%//')
     usedBarWidth=$(((usagePercent * barWidth) / 100))
     barContent=""
@@ -55,4 +56,3 @@ for point in ${mountpoints}; do
     fi
     echo -e "  ${bar}"
 done
-

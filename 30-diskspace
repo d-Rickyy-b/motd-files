@@ -13,7 +13,7 @@ maxDiskUsage=80
 barWidth=50
 
 # mountpoints contains all the directories which devices should be monitored
-# Examples: mountpoints="/ /boot /home" - this will monitor the devices mounted 
+# Examples: mountpoints="/ /boot /home" - this will monitor the devices mounted
 mountpoints="/"
 
 # Make space above
@@ -23,8 +23,8 @@ echo "disk usage:"
 for point in ${mountpoints}; do
     # Get the output of df and add spaces after the newlines
     line=$(df -hl "${point}"|sed -e ':a;N;$!ba;s/\n/\n  /g')
-    usagePercent=$(echo "$line"|tail -n1|awk '{print $5;}'|sed 's/%//')
-    usedBarWidth=$((($usagePercent*$barWidth)/100))
+    usagePercent=$(echo "$line" | tail -n1 | awk '{print $5;}' | sed 's/%//')
+    usedBarWidth=$(((usagePercent * barWidth) / 100))
     barContent=""
     color="\e[32m"
 
@@ -41,7 +41,7 @@ for point in ${mountpoints}; do
 
     # Rest of the unused space in white
     barContent="${barContent}${clear}${dim}"
-    for sep in $(seq 1 $((barWidth-usedBarWidth))); do
+    for sep in $(seq 1 $((barWidth - usedBarWidth))); do
         barContent="${barContent}="
     done
     bar="[${barContent}${clear}]"

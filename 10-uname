@@ -1,0 +1,3 @@
+#!/bin/sh
+# This script prints out the OS distro and kernel information
+uname -snrvm

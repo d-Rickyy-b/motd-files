@@ -35,13 +35,13 @@ for point in ${mountpoints}; do
     barContent="${color}"
 
     # Build the usage bar
-    for sep in $(seq 1 $usedBarWidth); do
+    for _ in $(seq 1 $usedBarWidth); do
         barContent="${barContent}="
     done
 
     # Rest of the unused space in white
     barContent="${barContent}${clear}${dim}"
-    for sep in $(seq 1 $((barWidth - usedBarWidth))); do
+    for _ in $(seq 1 $((barWidth - usedBarWidth))); do
         barContent="${barContent}="
     done
     bar="[${barContent}${clear}]"

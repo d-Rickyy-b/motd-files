@@ -32,4 +32,3 @@ $W  Online users: $W$(who|wc -l)
 
 $W  CPU.........: $W$PROCESSOR_NAME ($G$PROCESSOR_COUNT$W vCPU)
 $W  Memory......: $G$USED$W used, $G$FREE$W free, $G$TOTAL$W total$W"
-

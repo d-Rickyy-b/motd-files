@@ -15,4 +15,4 @@ for jail in "${jails[@]}"; do
 done
 
 printf "\nfail2ban status:\n"
-printf $out | column -ts $',' | sed -e 's/^/  /'
+printf "$out" | column -ts $',' | sed -e 's/^/  /'

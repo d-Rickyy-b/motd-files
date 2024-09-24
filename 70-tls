@@ -5,14 +5,13 @@
 # REQUIREMENTS: openssl
 ## CONFIG
 
-certificates=(
-    "/path/to/cert"
-    "/etc/letsencrypt/live/domain/fullchain.pem"
+certificate_dirs=(
+    "/opt/servarr/config/caddy/data/caddy/certificates/acme-v02.api.letsencrypt.org-directory/"
 )
 
-certificateNames=(
-    "example.com"
-    "nice.domain.com"
+custom_certificates=(
+    "/path/to/cert"
+    "/etc/letsencrypt/live/domain/fullchain.pem"
 )
 
 red="\e[31m"
@@ -47,6 +46,11 @@ expires_in () {
     fi
 }
 
+# Find all certificates and extend with custom certificates
+IFS=$'\n'
+certificates=($(find "${certificate_dirs[*]}" -type f -name "*.crt" -o -name "*.cer" 2>/dev/null))
+unset IFS
+certificates+=("${custom_certificates[@]}")
 
 echo ""
 echo "tls certificates:"
@@ -55,7 +59,6 @@ output+="  Domain | Status\n"
 for i in "${!certificates[@]}"; do
     cert="${certificates[$i]}"
     certname=$(openssl x509 -subject -noout -in "$cert" | cut -d " " -f3)
-
     exp_date=$(expiry_date "$cert")
     expires=$(unix_date "$exp_date")
     now=$(unix_date "now")
@@ -69,11 +72,11 @@ for i in "${!certificates[@]}"; do
     # But that takes a lot of time. We don't want to wait during login
 
     if [ "$expires" -le "$now" ]; then
-        output+=" $red▲$undim ${certificateNames[$i]} | ${red}expired ($expiryDate)$undim\n"
+        output+=" $red▲$undim $certname | ${red}expired ($expiryDate)$undim\n"
     elif [ "$expires" -le "$inAWeek" ]; then
-        output+="  $orange●$undim ${certificateNames[$i]} | ${orange}expiring soon ($expiresIn left)$undim\n"
+        output+="  $orange●$undim $certname | ${orange}expiring soon ($expiresIn left)$undim\n"
     else
-        output+="  $green●$undim ${certificateNames[$i]} | ${green}expires in $expiresIn ($expiryDate)$undim\n"
+        output+="  $green●$undim $certname | ${green}expires in $expiresIn ($expiryDate)$undim\n"
     fi
 done
 

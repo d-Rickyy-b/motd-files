@@ -1,11 +1,13 @@
 # motd-files
 
-This repository serves as a container for all of my motd files I use. 
+This repository serves as a container for all of the motd files I use.
 
 ## What is a 'motd'?
+
 When you login to a system (e.g. via ssh), your system will prompt you with the **m**essage **o**f **t**he **d**ay (motd). Normally the text to be shown there is stored under `/etc/motd` but there was demand for dynamic `motd`s. That's when the package `update-motd` became popular. The history of that is kinda weird and crazy, that's why you find a lot of confusing articles out there on how to set it up (which might be way outdated by now).
 
 ## How to use it?
+
 Setting up a dynamic motd is quite easy on a modern debian or ubuntu os. My reference is [this great article](https://ownyourbits.com/2017/04/05/customize-your-motd-login-message-in-debian-and-ubuntu/) written by @nachoparker.
 
 If you have an up to date debian or ubuntu you can start right away.
@@ -22,23 +24,30 @@ One of the most important steps is to make the files executable!
 Now we are nearly finished. Go ahead and delete your current `/etc/motd` file with
 ```rm /etc/motd```
 
-If you now login to your system via ssh it should work just fine. If it does not, you might need to check your `/etc/ssh/sshd_config` server config. You must use PAM for this to work `UsePAM yes`.
-Also you need to check if your `/etc/pam.d/sshd` config file contains the following content:
+If you now login to your system via ssh it should work just fine. If it does not, you might need to check your `/etc/ssh/sshd_config` server config. You must use PAM for this to work `UsePAM yes`. Also make sure to set `PrintMotd no`.
+Lastly you need to check if your `/etc/pam.d/sshd` config file contains the following content:
 
 ```
 # Print the message of the day upon successful login.
 # This includes a dynamically generated part from /run/motd.dynamic
 # and a static (admin-editable) part from /etc/motd.
 session    optional     pam_motd.so  motd=/run/motd.dynamic
-session    optional     pam_motd.so noupdate
+# session    optional     pam_motd.so noupdate
 ```
 
+The `motd=/run/motd.dynamic` must be present. If it is not, add it.
+If both `pam_motd.so motd=/run/motd.dynamic` and `pam_motd.so noupdate` are present, PAM will first display the dynamically generated MOTD from /run/motd.dynamic, followed by the static MOTD in /etc/motd.
+
+However, it's uncommon to use both unless you explicitly want both a dynamic and static MOTD.
+
 ## Demo of the motd files
+
 Here is a screenshot of the motd one of my servers
 
 ![Screenshot](https://raw.githubusercontent.com/d-Rickyy-b/motd-files/master/demo.png)
 
 ## Troubleshooting
+
 Most of these scripts parse some information from certain commands to display them. If your os is not set to english, the scripts might fail to parse the correct data.
 Also remember that all those scripts will be executed before your server starts your session & shell. That means the more work you do there, the longer it takes for your shell to appear.
 You can always use `time /path/to/script` to check the execution time of your script. Make sure all scripts together don't take longer than a second or you will have to wait for quite a long time.

@@ -25,7 +25,7 @@ Now we are nearly finished. Go ahead and delete your current `/etc/motd` file wi
 ```rm /etc/motd```
 
 If you now login to your system via ssh it should work just fine. If it does not, you might need to check your `/etc/ssh/sshd_config` server config. You must use PAM for this to work `UsePAM yes`. Also make sure to set `PrintMotd no`.
-Lastly you need to check if your `/etc/pam.d/sshd` config file contains the following content:
+Lastly you need to check if your `/etc/pam.d/sshd` (for ssh logins) and `/etc/pam.d/login` (local terminal logins) config file contains the following content:
 
 ```
 # Print the message of the day upon successful login.

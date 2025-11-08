@@ -58,7 +58,7 @@ output=""
 output+="  Domain | Status\n"
 for i in "${!certificates[@]}"; do
     cert="${certificates[$i]}"
-    certname=$(openssl x509 -subject -noout -in "$cert" | cut -d " " -f3)
+    certname=$(openssl x509 -subject -noout -in "$cert" | cut -d "=" -f3)
     exp_date=$(expiry_date "$cert")
     expires=$(unix_date "$exp_date")
     now=$(unix_date "now")

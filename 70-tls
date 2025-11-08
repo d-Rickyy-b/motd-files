@@ -6,7 +6,7 @@
 ## CONFIG
 
 certificate_dirs=(
-    "/opt/servarr/config/caddy/data/caddy/certificates/acme-v02.api.letsencrypt.org-directory/"
+    "/path/to/cert/dir/"
 )
 
 custom_certificates=(
